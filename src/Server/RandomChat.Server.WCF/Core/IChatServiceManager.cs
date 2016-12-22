@@ -15,6 +15,8 @@
 
         void FindFreeClientToChat(string ip);
 
+        void LeaveChat(string ip);
+
         bool IsInChat(string ip);
 
         bool AddMessage(string ip, string message, DateTime sendOn);

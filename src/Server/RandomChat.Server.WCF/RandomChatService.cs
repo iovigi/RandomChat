@@ -1,27 +1,63 @@
 ﻿namespace RandomChat.Server.WCF
 {
     using System;
+    using System.Collections.Generic;
     using System.ServiceModel;
     using System.ServiceModel.Channels;
+    using Core;
 
     public class RandomChatService : IRandomChatService
     {
-        public string GetData(int value)
+        private readonly IChatServiceManager manager;
+
+        public RandomChatService(IChatServiceManager manager)
         {
-            return string.Format("You entered: {0}", value);
+            if(manager == null)
+            {
+                throw new ArgumentNullException("manager");
+            }
+
+            this.manager = manager;
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        public bool AddMessage(string message, DateTime sendOn)
         {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
+            return this.manager.AddMessage(this.GetIP(), message, sendOn);
+        }
+
+        public void FindFreeClientToChat()
+        {
+            this.manager.FindFreeClientToChat(this.GetIP());
+        }
+
+        public IEnumerable<DataContracts.Message> GetMessageFromOtherClientAfter(DateTime date)
+        {
+            return this.manager.GetMessageFromOtherClientAfter(date, this.GetIP());
+        }
+
+        public bool IsInChat()
+        {
+            return this.manager.IsInChat(this.GetIP());
+        }
+
+        public bool JoinToServer()
+        {
+            return this.manager.JoinToServer(this.GetIP());
+        }
+
+        public void LeaveChat()
+        {
+            this.manager.LeaveChat(this.GetIP());
+        }
+
+        public void LeaveServer()
+        {
+            this.manager.LeaveServer(this.GetIP());
+        }
+
+        public void Ping()
+        {
+            this.manager.Ping(this.GetIP());
         }
 
         private string GetIP()
