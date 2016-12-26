@@ -7,6 +7,9 @@
     public class Client
     {
         private static int nextUId = 0;
+
+        private volatile bool isFree;
+
         public Client(string ip)
         {
             this.IP = ip;
@@ -20,6 +23,18 @@
         public string IP { get; set; }
 
         public DateTime LastPingTime { get; set; }
+
+        public bool IsFree
+        {
+            get
+            {
+                return this.isFree;
+            }
+            set
+            {
+                this.isFree = value;
+            }
+        }
 
         public override bool Equals(object obj)
         {

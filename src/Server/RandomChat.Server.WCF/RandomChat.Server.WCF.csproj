@@ -48,6 +48,9 @@
   <ItemGroup>
     <Compile Include="Conversation\Conversation.cs" />
     <Compile Include="Conversation\ConversationManager.cs" />
+    <Compile Include="Conversation\IConversationManager.cs" />
+    <Compile Include="Core\ChatServiceManager.cs" />
+    <Compile Include="Core\ClientManager.cs" />
     <Compile Include="Core\IChatServiceManager.cs" />
     <Compile Include="Core\IClientManager.cs" />
     <Compile Include="IRandomChatService.cs" />

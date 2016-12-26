@@ -14,6 +14,8 @@
 
         void SetFreeClient(Client client);
 
+        Client GetClient(string ip);
+
         void Ping(Client client);
 
         bool IsClientFree(Client client);
