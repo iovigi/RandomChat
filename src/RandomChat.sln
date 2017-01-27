@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{47483C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{35558943-CD6D-4B8D-A631-50366C46AE0C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{2538A59E-1CB0-40B5-8B2A-C2EFB600286F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomChat.Server.WCF", "Server\RandomChat.Server.WCF\RandomChat.Server.WCF.csproj", "{C9F37435-7BD0-4915-B19E-0DBCD82BDF42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomChat.Server.Console", "Server\RandomChat.Server.Console\RandomChat.Server.Console.csproj", "{C7AE0D9E-0D1A-4CBD-B5CD-69D078BCB9BB}"

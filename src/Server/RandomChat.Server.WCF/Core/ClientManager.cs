@@ -17,6 +17,8 @@
         private readonly HashSet<Client> clients;
         private Task CleanTask;
 
+        public bool IsShutDown { get; private set; }
+
         public ClientManager()
         {
             this.clients = new HashSet<Client>();
@@ -117,7 +119,7 @@
 
         private void Clean()
         {
-            while(true)
+            while(!this.IsShutDown)
             {
                 var cleanTime = DateTime.Now.AddSeconds(-CLIENT_CLEAN_TIME);
 
@@ -141,6 +143,16 @@
 
                 Thread.Sleep(CLEAN_TIME);
             }
+        }
+
+        public void Start()
+        {
+            this.IsShutDown = false;
+        }
+
+        public void Stop()
+        {
+            this.IsShutDown = true;
         }
     }
 }
