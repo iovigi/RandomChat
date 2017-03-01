@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RandomChat.Client.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="525">
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        Title="MainWindow" Height="550" Width="525"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="0.25*" />
-        </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="test
-               dsadsa" />
-        <TextBox Grid.Row="1" />
-        <Button Content="Send" Style="{StaticResource btn}" Grid.Row="2"/>
+        <ContentControl prism:RegionManager.RegionName="MainRegion" />
     </Grid>
 </Window>
