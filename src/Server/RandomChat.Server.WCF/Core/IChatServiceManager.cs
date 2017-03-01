@@ -6,6 +6,8 @@
 
     public interface IChatServiceManager
     {
+        bool IsShutDown { get; }
+
 
         bool JoinToServer(string ip);
 
@@ -22,5 +24,7 @@
         bool AddMessage(string ip, string message, DateTime sendOn);
 
         IEnumerable<Message> GetMessageFromOtherClientAfter(DateTime date, string ip);
+        void Start();
+        void Stop();
     }
 }

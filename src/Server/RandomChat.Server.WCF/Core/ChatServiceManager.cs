@@ -41,7 +41,9 @@
                 clientManager.SetFreeClient(y);
             };
         }
-         
+
+        public bool IsShutDown { get; private set; }
+
         public bool AddMessage(string ip, string message, DateTime sendOn)
         {
             return this.conversationManager.AddMessage(new Message()
@@ -101,14 +103,26 @@
             this.clientManager.Ping(this.clientManager.GetClient(ip));
         }
 
+        public void Start()
+        {
+            this.clientManager.Start();
+
+            this.IsShutDown = false;
+        }
+
+        public void Stop()
+        {
+            this.clientManager.Stop();
+
+            this.IsShutDown = true;
+        }
+
         //TODO:Shut down logic must be implement :)
         private void FindFreeClientForOtherClient(object state)
         {
             var ip = (string)state;
 
-            var flag = true;
-
-            while(flag)
+            while(!IsShutDown)
             {
                 var firstClient = this.clientManager.GetClient(ip);
 

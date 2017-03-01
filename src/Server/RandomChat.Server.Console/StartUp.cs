@@ -4,6 +4,8 @@
     using System.ServiceModel;
     using System.ServiceModel.Description;
     using WCF;
+    using WCF.Conversation;
+    using WCF.Core;
 
     public class StartUp
     {
@@ -11,7 +13,14 @@
         {
             Uri baseAddress = new Uri("http://localhost:8080/");
 
-            using (ServiceHost host = new ServiceHost(typeof(RandomChatService), baseAddress))
+            var clientManager = new ClientManager();
+            var conversationManager = new ConversationManager();
+            var chatServiceManager = new ChatServiceManager(clientManager, conversationManager);
+            chatServiceManager.Start();
+
+            var randomChatService = new RandomChatService(chatServiceManager);
+
+            using (ServiceHost host = new ServiceHost(randomChatService, baseAddress))
             {
                 // Enable metadata publishing.
                 ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
@@ -37,6 +46,8 @@
                 // Close the ServiceHost.
                 host.Close();
             }
+
+            chatServiceManager.Stop();
         }
     }
 }

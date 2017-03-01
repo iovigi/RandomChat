@@ -4,6 +4,8 @@
 
     public interface IClientManager
     {
+        bool IsShutDown { get; }
+
         bool JoinClient(Client client);
 
         bool LeaveClient(Client client);
@@ -19,5 +21,8 @@
         void Ping(Client client);
 
         bool IsClientFree(Client client);
+
+        void Start();
+        void Stop();
     }
 }
