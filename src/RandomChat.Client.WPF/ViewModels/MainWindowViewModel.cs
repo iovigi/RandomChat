@@ -3,24 +3,22 @@
     using System.Windows.Input;
     using Prism.Commands;
     using Prism.Regions;
-    using Prism.Mvvm;
     using Common.Client;
+    using ViewModels;
 
-    public class MainWindowViewModel : BindableBase
+    public class MainWindowViewModel : BaseViewModel
     {
-        private readonly IRegionManager regionManager;
-
         public MainWindowViewModel(IRegionManager regionManager)
+            :base(regionManager)
         {
-            this.regionManager = regionManager;
-            this.InitializeCommand = new DelegateCommand(Initialize);
+            this.InitializeCommand = new DelegateCommand(this.Initialize);
         }
 
         public ICommand InitializeCommand { get; set; }
 
         private void Initialize()
         {
-            this.regionManager.RequestNavigate(RegionConstants.MAIN_REGION_NAME, ViewConstats.CHAT_VIEW_NAME);
+            this.RequestNavigation(ViewConstants.CONNECTING_VIEW_NAME);
         }
     }
 }

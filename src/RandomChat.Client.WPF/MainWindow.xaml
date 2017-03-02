@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:RandomChat.Client.WPF"
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-        Title="MainWindow" Height="550" Width="525"
+        Title="Random Chat"
+        Icon="images\icon.png"
+        Height="550" 
+        Width="550"
+        ResizeMode="CanMinimize"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True">
     <i:Interaction.Triggers>

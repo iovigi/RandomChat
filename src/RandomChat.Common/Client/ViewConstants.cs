@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RandomChat.Common.Client
 {
-    public class ViewConstats
+    public class ViewConstants
     {
         public const string CONNECTING_VIEW_NAME = "ConnectingView";
 

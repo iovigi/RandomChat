@@ -43,7 +43,7 @@
     <Compile Include="Assemblies.cs" />
     <Compile Include="Client\ConfigurationConstants.cs" />
     <Compile Include="Client\RegionConstants.cs" />
-    <Compile Include="Client\ViewConstats.cs" />
+    <Compile Include="Client\ViewConstants.cs" />
     <Compile Include="GlobalConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

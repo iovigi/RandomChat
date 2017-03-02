@@ -31,8 +31,8 @@
                 }
             }
 
-            this.Container.RegisterType<object, ChatView>(ViewConstats.CHAT_VIEW_NAME);
-            this.Container.RegisterType<object, ConnectingView>(ViewConstats.CONNECTING_VIEW_NAME);
+            this.Container.RegisterType<object, ChatView>(ViewConstants.CHAT_VIEW_NAME);
+            this.Container.RegisterType<object, ConnectingView>(ViewConstants.CONNECTING_VIEW_NAME);
 
             return this.Container.Resolve<MainWindow>();
         }
