@@ -25,11 +25,11 @@
             this.CleanTask = Task.Factory.StartNew(this.Clean);
         }
 
-        public Client GetClient(string ip)
+        public Client GetClient(string id)
         {
             lock (SyncRoot)
             {
-                return this.clients.FirstOrDefault(x => x.IP == ip);
+                return this.clients.FirstOrDefault(x => x.ID == id);
             }
         }
 
@@ -65,7 +65,9 @@
 
                 if(c == null)
                 {
-                    return;
+                    this.clients.Add(client);
+
+                    c = client;
                 }
 
                 c.LastPingTime = DateTime.Now;

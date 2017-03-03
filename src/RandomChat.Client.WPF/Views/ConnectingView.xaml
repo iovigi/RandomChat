@@ -10,6 +10,6 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-        <TextBlock Style="{StaticResource ResourceKey=CenterTitle}">Connecting</TextBlock>
+        <TextBlock Style="{StaticResource ResourceKey=CenterTitle}" Text="{Binding State}" />
     </Grid>
 </UserControl>

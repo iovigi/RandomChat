@@ -9,19 +9,19 @@
         bool IsShutDown { get; }
 
 
-        bool JoinToServer(string ip);
+        string JoinToServer();
 
-        void LeaveServer(string ip);
+        void LeaveServer(string id);
 
-        void Ping(string ip);
+        void Ping(string id);
 
-        void FindFreeClientToChat(string ip);
+        void FindFreeClientToChat(string id);
 
-        void LeaveChat(string ip);
+        void LeaveChat(string id);
 
-        bool IsInChat(string ip);
+        bool IsInChat(string id);
 
-        bool AddMessage(string ip, string message, DateTime sendOn);
+        bool AddMessage(string id, string message, DateTime sendOn);
 
         IEnumerable<Message> GetMessageFromOtherClientAfter(DateTime date, string ip);
         void Start();

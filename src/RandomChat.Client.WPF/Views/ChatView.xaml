@@ -15,7 +15,7 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="0.25*" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="test
+        <TextBlock Grid.Row="0" Text="test
                dsadsa" />
         <TextBox Grid.Row="1" />
         <Button Content="Send" Style="{StaticResource btn}" Grid.Row="2"/>

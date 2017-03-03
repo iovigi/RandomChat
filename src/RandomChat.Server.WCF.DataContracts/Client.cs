@@ -10,9 +10,9 @@
 
         private volatile bool isFree;
 
-        public Client(string ip)
+        public Client(string id)
         {
-            this.IP = ip;
+            this.ID = id;
             this.UId = nextUId++;
             this.LastPingTime = DateTime.Now;
         }
@@ -20,7 +20,7 @@
         [DataMember]
         public int UId { get; set; }
 
-        public string IP { get; set; }
+        public string ID { get; set; }
 
         public DateTime LastPingTime { get; set; }
 
@@ -45,12 +45,17 @@
                 return false;
             }
 
-            return this.IP == otherClient.IP;
+            return this.ID == otherClient.ID;
         }
 
         public override int GetHashCode()
         {
-            return this.IP.GetHashCode();
+            return this.ID.GetHashCode();
+        }
+
+        public static string GetNextId()
+        {
+            return Guid.NewGuid().ToString();
         }
     }
 }

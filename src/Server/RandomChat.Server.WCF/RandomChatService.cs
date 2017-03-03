@@ -2,9 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ServiceModel;
-    using System.ServiceModel.Channels;
+    using System.ServiceModel.Web;
     using Core;
+    using Common.Server;
+
 
     public class RandomChatService : IRandomChatService
     {
@@ -22,52 +23,50 @@
 
         public bool AddMessage(string message, DateTime sendOn)
         {
-            return this.manager.AddMessage(this.GetIP(), message, sendOn);
+            return this.manager.AddMessage(this.GetID(), message, sendOn);
         }
 
         public void FindFreeClientToChat()
         {
-            this.manager.FindFreeClientToChat(this.GetIP());
+            this.manager.FindFreeClientToChat(this.GetID());
         }
 
         public IEnumerable<DataContracts.Message> GetMessageFromOtherClientAfter(DateTime date)
         {
-            return this.manager.GetMessageFromOtherClientAfter(date, this.GetIP());
+            return this.manager.GetMessageFromOtherClientAfter(date, this.GetID());
         }
 
         public bool IsInChat()
         {
-            return this.manager.IsInChat(this.GetIP());
+            return this.manager.IsInChat(this.GetID());
         }
 
-        public bool JoinToServer()
+        public string JoinToServer()
         {
-            return this.manager.JoinToServer(this.GetIP());
+            return this.manager.JoinToServer();
         }
 
         public void LeaveChat()
         {
-            this.manager.LeaveChat(this.GetIP());
+            this.manager.LeaveChat(this.GetID());
         }
 
         public void LeaveServer()
         {
-            this.manager.LeaveServer(this.GetIP());
+            this.manager.LeaveServer(this.GetID());
         }
 
         public void Ping()
         {
-            this.manager.Ping(this.GetIP());
+            this.manager.Ping(this.GetID());
         }
 
-        private string GetIP()
+        private string GetID()
         {
-            OperationContext context = OperationContext.Current;
-            MessageProperties prop = context.IncomingMessageProperties;
-            RemoteEndpointMessageProperty endpoint = prop[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
-            string ip = endpoint.Address;
+            WebOperationContext context = WebOperationContext.Current;
+            string id = context.IncomingRequest.Headers[ServiceHeaderConstants.ID];
 
-            return ip;
+            return id;
         }
     }
 }

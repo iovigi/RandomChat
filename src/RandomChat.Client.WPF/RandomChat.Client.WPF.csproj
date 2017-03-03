@@ -153,6 +153,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RandomChat.Client.WPF.Services\RandomChat.Client.Services.csproj">
+      <Project>{b9e4dd79-1f8b-4300-b06a-7f8692dd6b4f}</Project>
+      <Name>RandomChat.Client.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RandomChat.Common\RandomChat.Common.csproj">
       <Project>{2A0C12D9-86B6-43E4-ABB7-4FFA98C298E2}</Project>
       <Name>RandomChat.Common</Name>

@@ -9,6 +9,8 @@
     using Common;
     using Common.Client;
     using Views;
+    using Services;
+    using Services.Contracts;
 
     public class Bootstrapper : UnityBootstrapper
     {
@@ -16,10 +18,13 @@
         {
             var serverName = ConfigurationManager.AppSettings[ConfigurationConstants.SERVER_CONFIG_NAME];
 
+            this.Container.RegisterType<IRestClient, RestClient>(new InjectionConstructor(serverName));
+            this.Container.RegisterType<IServerManager, ServerManager>(new ContainerControlledLifetimeManager());
+
             var assembly = Assembly.Load(Assemblies.RANDOM_CHAT_CLIENT_WPF);
             var exportedTypes = assembly.GetExportedTypes();
 
-            foreach (var t in exportedTypes.Where(x => !x.IsAbstract || !x.IsInterface))
+            foreach (var t in exportedTypes.Where(x => !x.IsAbstract && !x.IsInterface && x != typeof(RestClient) && x != typeof(ServerManager)))
             {
                 this.Container.RegisterType(t);
 

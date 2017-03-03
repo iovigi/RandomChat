@@ -44,29 +44,29 @@
 
         public bool IsShutDown { get; private set; }
 
-        public bool AddMessage(string ip, string message, DateTime sendOn)
+        public bool AddMessage(string id, string message, DateTime sendOn)
         {
             return this.conversationManager.AddMessage(new Message()
             {
                 SendOn = sendOn,
-                IP = ip,
+                ID = id,
                 Content = message
             });
         }
 
-        public void FindFreeClientToChat(string ip)
+        public void FindFreeClientToChat(string id)
         {
-            Task.Factory.StartNew(FindFreeClientForOtherClient, (object)ip);
+            Task.Factory.StartNew(FindFreeClientForOtherClient, (object)id);
         }
 
-        public IEnumerable<Message> GetMessageFromOtherClientAfter(DateTime date, string ip)
+        public IEnumerable<Message> GetMessageFromOtherClientAfter(DateTime date, string id)
         {
-            return this.conversationManager.GetMessagesFromConversationAfter(date, this.clientManager.GetClient(ip));
+            return this.conversationManager.GetMessagesFromConversationAfter(date, this.clientManager.GetClient(id));
         }
 
-        public bool IsInChat(string ip)
+        public bool IsInChat(string id)
         {
-            var client = this.clientManager.GetClient(ip);
+            var client = this.clientManager.GetClient(id);
 
             if(client == null)
             {
@@ -76,14 +76,21 @@
             return this.clientManager.IsClientFree(client);
         }
 
-        public bool JoinToServer(string ip)
+        public string JoinToServer()
         {
-            return this.clientManager.JoinClient(new Client(ip));
+            var newId = Client.GetNextId();
+
+            while(!this.clientManager.JoinClient(new Client(newId)))
+            {
+                newId = Client.GetNextId();
+            }
+
+            return newId;
         }
 
-        public void LeaveChat(string ip)
+        public void LeaveChat(string id)
         {
-            var client = this.clientManager.GetClient(ip);
+            var client = this.clientManager.GetClient(id);
 
             if(client != null)
             {
@@ -91,16 +98,16 @@
             }
         }
 
-        public void LeaveServer(string ip)
+        public void LeaveServer(string id)
         {
-            this.LeaveChat(ip);
+            this.LeaveChat(id);
 
-            this.clientManager.LeaveClient(new Client(ip));
+            this.clientManager.LeaveClient(new Client(id));
         }
 
-        public void Ping(string ip)
+        public void Ping(string id)
         {
-            this.clientManager.Ping(this.clientManager.GetClient(ip));
+            this.clientManager.Ping(new Client(id));
         }
 
         public void Start()
@@ -120,11 +127,11 @@
         //TODO:Shut down logic must be implement :)
         private void FindFreeClientForOtherClient(object state)
         {
-            var ip = (string)state;
+            var id = (string)state;
 
             while(!IsShutDown)
             {
-                var firstClient = this.clientManager.GetClient(ip);
+                var firstClient = this.clientManager.GetClient(id);
 
                 if(firstClient == null)
                 {

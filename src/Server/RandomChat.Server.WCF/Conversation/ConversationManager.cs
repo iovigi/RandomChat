@@ -24,7 +24,7 @@
                 throw new ArgumentNullException("message");
             }
 
-            var conversation = this.conversations.FirstOrDefault(x => x.FirstClient.IP == message.IP || x.SecondClient.IP == message.IP);
+            var conversation = this.conversations.FirstOrDefault(x => x.FirstClient.ID == message.ID || x.SecondClient.ID == message.ID);
 
             if(conversation == null)
             {
