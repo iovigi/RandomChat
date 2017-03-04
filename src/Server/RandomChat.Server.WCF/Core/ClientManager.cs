@@ -17,13 +17,15 @@
         private readonly HashSet<Client> clients;
         private Task CleanTask;
 
-        public bool IsShutDown { get; private set; }
-
         public ClientManager()
         {
             this.clients = new HashSet<Client>();
             this.CleanTask = Task.Factory.StartNew(this.Clean);
         }
+
+        public event Action<Client> ClientLeave;
+
+        public bool IsShutDown { get; private set; }
 
         public Client GetClient(string id)
         {
@@ -53,6 +55,7 @@
         {
             lock (SyncRoot)
             {
+                this.OnClientLeave(client);
                 return this.clients.Remove(client);
             }
         }
@@ -139,6 +142,7 @@
 
                     foreach(var client in forRemove)
                     {
+                        this.OnClientLeave(client);
                         this.clients.Remove(client);
                     }
                 }
@@ -155,6 +159,16 @@
         public void Stop()
         {
             this.IsShutDown = true;
+        }
+
+        private void OnClientLeave(Client client)
+        {
+            if(client == null)
+            {
+                return;
+            }
+
+            this.ClientLeave?.Invoke(client);
         }
     }
 }

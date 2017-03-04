@@ -1,10 +1,13 @@
 ﻿namespace RandomChat.Server.WCF.Core
 {
+    using System;
     using DataContracts; 
 
     public interface IClientManager
     {
         bool IsShutDown { get; }
+
+        event Action<Client> ClientLeave;
 
         bool JoinClient(Client client);
 

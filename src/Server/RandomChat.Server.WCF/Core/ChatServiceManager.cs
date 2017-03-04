@@ -16,20 +16,23 @@
 
         public ChatServiceManager(IClientManager clientManager, IConversationManager conversationManager)
         {
-            if(clientManager == null)
+            if (clientManager == null)
             {
                 throw new ArgumentNullException("clientManager");
             }
 
-            if(conversationManager == null)
+            if (conversationManager == null)
             {
                 throw new ArgumentNullException("conversationManager");
             }
 
             this.clientManager = clientManager;
+
             this.conversationManager = conversationManager;
 
-            conversationManager.ConversationStart += (x, y) => 
+            this.clientManager.ClientLeave += c => conversationManager.EndConversation(c);
+
+            conversationManager.ConversationStart += (x, y) =>
             {
                 clientManager.SetNotFreeClient(x);
                 clientManager.SetNotFreeClient(y);
@@ -68,7 +71,7 @@
         {
             var client = this.clientManager.GetClient(id);
 
-            if(client == null)
+            if (client == null)
             {
                 return false;
             }
@@ -80,7 +83,7 @@
         {
             var newId = Client.GetNextId();
 
-            while(!this.clientManager.JoinClient(new Client(newId)))
+            while (!this.clientManager.JoinClient(new Client(newId)))
             {
                 newId = Client.GetNextId();
             }
@@ -92,7 +95,7 @@
         {
             var client = this.clientManager.GetClient(id);
 
-            if(client != null)
+            if (client != null)
             {
                 this.conversationManager.EndConversation(client);
             }
@@ -129,18 +132,18 @@
         {
             var id = (string)state;
 
-            while(!IsShutDown)
+            while (!IsShutDown)
             {
                 var firstClient = this.clientManager.GetClient(id);
 
-                if(firstClient == null)
+                if (firstClient == null)
                 {
                     return;
                 }
 
                 var secondClient = this.clientManager.GetFreeClient();
 
-                if(secondClient == null)
+                if (secondClient == null)
                 {
                     Thread.Sleep(TIME_TO_WAIT_FOR_CHECK_AGAIN_FOR_FREE_CLIENT);
 

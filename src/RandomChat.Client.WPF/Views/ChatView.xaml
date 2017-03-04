@@ -15,9 +15,13 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="0.25*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="test
-               dsadsa" />
-        <TextBox Grid.Row="1" />
-        <Button Content="Send" Style="{StaticResource btn}" Grid.Row="2"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Messages}" TextWrapping="Wrap" />
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" x:Name="Message" Text="{Binding Message}"/>
+        <Button Content="Send" Style="{StaticResource btn}" Grid.Row="1" Grid.Column="1" Command="{Binding SendCommand}" CommandParameter="{Binding Text, ElementName=Message}"/>
+        <Button Content="Leave" Style="{StaticResource btn}" Grid.Row="2" Grid.Column="1" Command="{Binding LeaveCommand}"/>
     </Grid>
 </UserControl>
